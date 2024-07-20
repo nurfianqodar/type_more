@@ -68,10 +68,10 @@ impl RawPassword {
         if password.len() < 10
             && !(password.chars().any(|c| c.is_ascii_digit()))
             && !(password.chars().any(|c| c.is_uppercase()))
-            && !(password.chars().any(|c| "".contains(c)))
+            && !(password.chars().any(|c| "~`@#$%^&*()_+".contains(c)))
         {
             Err(TypeMoreError::ParseError(
-                "invalid strong password".to_string(),
+                "invalid extreme password".to_string(),
             ))
         } else {
             Ok(Self {
