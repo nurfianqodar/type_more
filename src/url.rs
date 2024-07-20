@@ -1,5 +1,7 @@
-// src/url.rs
-
+/// A module for handling URL protocols and URL validation.
+///
+/// Defines the `Proto` enum for URL protocols and the `Url` struct for URL handling with validation
+/// and serialization/deserialization.
 use std::{
     fmt::{self, Display},
     str::FromStr,
@@ -10,6 +12,28 @@ use serde::{Deserialize, Serialize};
 
 use crate::error::TypeMoreError;
 
+/// Enum representing various URL protocols.
+///
+/// # Variants
+///
+/// - `Http`
+/// - `Https`
+/// - `Ftp`
+/// - `Sftp`
+/// - `Ftps`
+/// - `Ssh`
+/// - `Telnet`
+/// - `File`
+/// - `Ws`
+/// - `Wss`
+/// - `Gopher`
+/// - `Ldap`
+/// - `Rtsp`
+/// - `Smb`
+/// - `Nfs`
+/// - `Imap`
+/// - `Pop3`
+/// - `Nntp`
 #[derive(Debug, Clone, PartialEq)]
 pub enum Proto {
     Http,
@@ -57,9 +81,19 @@ impl fmt::Display for Proto {
     }
 }
 
-// FromString for Proto
 impl FromStr for Proto {
     type Err = TypeMoreError;
+
+    /// Converts a string to a `Proto` variant.
+    ///
+    /// # Parameters
+    ///
+    /// - `s`: A string representing the protocol.
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(Self)`: If the string is a valid protocol.
+    /// - `Err(TypeMoreError::ParseError("invalid protocol".to_string()))`: If the string does not match any protocol.
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "http" => Ok(Self::Http),
@@ -85,14 +119,31 @@ impl FromStr for Proto {
     }
 }
 
+/// A structure representing a URL with a protocol and domain.
+///
+/// # Fields
+///
+/// - `protocol`: The URL protocol as a `Proto` enum.
+/// - `domain`: The domain of the URL as a string.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Url {
     protocol: Proto,
     domain: String,
 }
 
-// Constructor
+/// Implementation of the `Url` struct with validation and construction.
 impl Url {
+    /// Creates a new `Url` instance.
+    ///
+    /// # Parameters
+    ///
+    /// - `protocol`: The URL protocol as a `Proto` enum.
+    /// - `domain`: A string representing the domain.
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(Self { protocol, domain })`: If the domain is valid.
+    /// - `Err(TypeMoreError::ParseError("invalid domain".to_string()))`: If the domain does not match the regex pattern.
     pub fn new(protocol: Proto, domain: impl ToString) -> Result<Self, TypeMoreError> {
         let domain_regex = Regex::new(
             r"^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(?:/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*$",
@@ -108,9 +159,19 @@ impl Url {
     }
 }
 
-// Implement from sting
 impl FromStr for Url {
     type Err = TypeMoreError;
+
+    /// Converts a string to a `Url`.
+    ///
+    /// # Parameters
+    ///
+    /// - `s`: A string representing the URL in the format `protocol://domain`.
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(Self { protocol, domain })`: If the URL is valid and correctly formatted.
+    /// - `Err(TypeMoreError::ParseError("invalid url".to_string()))`: If the string does not match the URL format.
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let s: Vec<&str> = s.split("://").collect();
         if s.len() == 2 {
@@ -123,14 +184,12 @@ impl FromStr for Url {
     }
 }
 
-// Display
 impl Display for Url {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}://{}", self.protocol, self.domain)
     }
 }
 
-// Serde
 impl<'de> Deserialize<'de> for Url {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where

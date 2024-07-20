@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use type_more::url::{Proto, Url};
+use type_more::{Proto, Url};
 
 #[test]
 fn test_proto_display() {
