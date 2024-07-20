@@ -2,6 +2,13 @@
 name = "type_more"
 version = "0.1.0"
 edition = "2021"
+author = ["Nurfian Qodar"]
+description = "A Rust crate for custom data types such as email, URL, and others, implementing the 'parse, don't validate' principle."
+license = "MIT"
+repository = "https://github.com/nurfianqodar/type_more" 
+homepage = "https://crates.io/crates/type_more"  
+documentation = "https://docs.rs/type_more"
+
 
 [dependencies]
 regex = "1.10.5"
