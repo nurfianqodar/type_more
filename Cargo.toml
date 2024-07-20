@@ -1,6 +1,6 @@
 [package]
 name = "type_more"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 author = ["Nurfian Qodar"]
 description = "A Rust crate for custom data types such as email, URL, and others, implementing the 'parse, don't validate' principle."
