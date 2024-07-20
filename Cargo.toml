@@ -12,6 +12,7 @@ keywords = ["parser", "custom-data-type", "valiator", "parse-dont-validate"]
 
 
 [dependencies]
+bcrypt = "0.15.1"
 regex = "1.10.5"
 serde = { version = "1.0.204", features = ["derive"] }
 

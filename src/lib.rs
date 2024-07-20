@@ -27,7 +27,9 @@
 ///
 mod email;
 pub mod error;
+mod password;
 mod url;
 
 pub use email::*;
+pub use password::*;
 pub use url::*;
