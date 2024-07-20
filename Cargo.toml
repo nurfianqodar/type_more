@@ -8,7 +8,7 @@ license = "MIT"
 repository = "https://github.com/nurfianqodar/type_more" 
 homepage = "https://crates.io/crates/type_more"  
 documentation = "https://docs.rs/type_more"
-keywords = ["parser", "parse-dont-validate", "serialize", "deserialize", "custom-data-type", "valiator"]
+keywords = ["parser", "custom-data-type", "valiator", "parse-dont-validate"]
 
 
 [dependencies]
